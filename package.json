@@ -1,0 +1,41 @@
+{
+  "name": "alpinejs-poll",
+  "version": "1.0.0",
+  "description": "Alpine.js plugin for polling and visibility tracking.",
+  "keywords": [
+    "alpine",
+    "alpinejs",
+    "plugin",
+    "directive",
+    "poll",
+    "visible",
+    "polling",
+    "visibility"
+  ],
+  "homepage": "https://github.com/eznix86/alpinejs-poll#readme",
+  "bugs": {
+    "url": "https://github.com/eznix86/alpinejs-poll/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eznix86/alpinejs-poll.git"
+  },
+  "license": "MIT",
+  "author": "Bruno Bernard",
+  "main": "dist/esm.min.js",
+  "module": "dist/esm.min.js",
+  "unpkg": "dist/cdn.min.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "bun test",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^20.0.11",
+    "esbuild": "^0.27.1"
+  }
+}
