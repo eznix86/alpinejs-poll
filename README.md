@@ -88,19 +88,26 @@ Visibility is tracked via:
 
 ### x-visible
 
-React to page visibility changes. Calls handler with `true` when visible, `false` when hidden.
+React to page visibility changes. Use `$visible` to access the visibility state.
 
 ```html
-<div x-data="{ status: 'visible' }" x-visible="(visible) => status = visible ? 'visible' : 'hidden'">
+<div x-data="{ status: 'visible' }" x-visible="status = $visible ? 'visible' : 'hidden'">
   Status: <span x-text="status"></span>
 </div>
 ```
 
 ```html
 <!-- Pause video when tab is hidden -->
-<video x-data x-visible="(visible) => visible ? $el.play() : $el.pause()">
+<video x-data x-visible="$visible ? $el.play() : $el.pause()">
   <source src="video.mp4" type="video/mp4">
 </video>
+```
+
+```html
+<!-- Track visibility changes -->
+<div x-data="{ count: 0 }" x-visible="count++">
+  Visibility changed <span x-text="count"></span> times
+</div>
 ```
 
 ## Examples
@@ -126,7 +133,7 @@ React to page visibility changes. Calls handler with `true` when visible, `false
 ### Connection status
 
 ```html
-<div x-data="{ online: true }" x-visible="(visible) => online = visible">
+<div x-data="{ online: true }" x-visible="online = $visible">
   <span x-show="online">Online</span>
   <span x-show="!online">Away</span>
 </div>
@@ -135,26 +142,3 @@ React to page visibility changes. Calls handler with `true` when visible, `false
 ## License
 
 MIT
-
-### Build and publish
-
-```sh
-# Build the dist files
-npm run build
-
-# Publish to npm
-npm publish
-```
-
-- npm: https://www.npmjs.com/package/alpinejs-poll
-- unpkg: https://unpkg.com/alpinejs-poll@latest/dist/cdn.min.js
-
-To update later:
-
-### Bump version
-npm version patch  # 1.0.0 → 1.0.1
-npm version minor  # 1.0.0 → 1.1.0
-npm version major  # 1.0.0 → 2.0.0
-
-### Publish
-npm publish

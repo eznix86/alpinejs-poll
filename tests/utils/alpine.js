@@ -1,33 +1,15 @@
-import { mock } from 'bun:test';
+import Alpine from 'alpinejs';
 
-// Simple Alpine mock that captures directives
-export function createAlpine() {
-    const directives = {};
-    return {
-        directive: (name, fn) => { directives[name] = fn; },
-        $: (name) => directives[name],
-    };
+export { Alpine };
+
+export function el(html = '<div></div>') {
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+    const element = template.content.firstChild;
+    document.body.appendChild(element);
+    return element;
 }
 
-// Simple element factory
-export function el() {
-    return document.createElement('div');
-}
-
-// Create Alpine utilities with evaluate and cleanup
-export function createUtils(fn) {
-    let cleanupFn = null;
-    return {
-        evaluate: (expr) => {
-            // Handle x-visible: "(fn)(true)" or "(fn)(false)"
-            const match = expr.match(/\((.+)\)\((true|false)\)/);
-            if (match) {
-                fn(match[2] === 'true');
-            } else {
-                fn();
-            }
-        },
-        cleanup: (cb) => { cleanupFn = cb; },
-        runCleanup: () => cleanupFn?.(),
-    };
+export function cleanup() {
+    document.body.innerHTML = '';
 }

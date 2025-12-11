@@ -10,7 +10,14 @@ export default function AlpinePoll(Alpine) {
     }
 
     function onVisibilityChange(handler) {
-        const update = (isVisible) => handler(isVisible);
+        let last;
+
+        const update = (isVisible) => {
+            if (last === isVisible) return;
+            last = isVisible;
+            handler(isVisible);
+        };
+
         const handleVisibility = () => update(!document.hidden);
         const onFocus = () => update(true);
         const onBlur = () => update(false);
@@ -36,7 +43,7 @@ export default function AlpinePoll(Alpine) {
 
     Alpine.directive('poll', (el, { modifiers, expression }, { evaluate, cleanup }) => {
         const intervalMs = parseInterval(modifiers);
-        const requireVisible = modifiers.includes('visible') || modifiers.includes('focus');
+        const requireVisible = modifiers.includes('visible');
 
         let timer = null;
         let visible = true;
@@ -73,13 +80,13 @@ export default function AlpinePoll(Alpine) {
         });
     });
 
-    Alpine.directive('visible', (el, { expression }, { evaluate, cleanup }) => {
+    Alpine.directive('visible', (el, { expression }, { evaluateLater, cleanup }) => {
+        const run = evaluateLater(expression);
+
         const cleanupVisibility = onVisibilityChange(isVisible => {
-            evaluate(`(${expression})(${isVisible})`);
+            run(() => {}, { scope: { $visible: isVisible } });
         });
 
-        cleanup(() => {
-            cleanupVisibility();
-        });
+        cleanup(cleanupVisibility);
     });
 }
