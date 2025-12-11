@@ -2,7 +2,7 @@
 generate-assets:
 	git push
 	npm run build
-	git add builds/ dists/
+	git add builds/ dist/
 	git commit -m "chore: generate assets"
 
 publish-patch: generate-assets
