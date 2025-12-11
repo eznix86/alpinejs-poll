@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/bundlephobia/min/alpinejs-poll)
 ![](https://img.shields.io/npm/v/alpinejs-poll)
-![](https://img.shields.io/npm/dt/alpinejs-poll)
+![](https://img.shields.io/npm/dw/alpinejs-poll)
 ![](https://img.shields.io/github/license/eznix86/alpinejs-poll)
 
 Alpine.js plugin for polling and visibility tracking.
