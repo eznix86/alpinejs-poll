@@ -7,14 +7,27 @@ export function createAlpine() {
         directive: (name, fn) => { directives[name] = fn; },
         $: (name) => directives[name],
     };
-};
-
-// Simple element with Alpine cleanup
-export function el() {
-    const element = document.createElement('div');
-    element._x_cleanup = mock((fn) => { element._cleanup = fn; });
-    return element;
 }
 
-// Simple evaluateLater mock
-export const evalLater = (fn) => () => (cb) => cb(fn);
+// Simple element factory
+export function el() {
+    return document.createElement('div');
+}
+
+// Create Alpine utilities with evaluate and cleanup
+export function createUtils(fn) {
+    let cleanupFn = null;
+    return {
+        evaluate: (expr) => {
+            // Handle x-visible: "(fn)(true)" or "(fn)(false)"
+            const match = expr.match(/\((.+)\)\((true|false)\)/);
+            if (match) {
+                fn(match[2] === 'true');
+            } else {
+                fn();
+            }
+        },
+        cleanup: (cb) => { cleanupFn = cb; },
+        runCleanup: () => cleanupFn?.(),
+    };
+}
