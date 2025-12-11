@@ -1,6 +1,6 @@
 {
   "name": "alpinejs-poll",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Alpine.js plugin for polling and visibility tracking.",
   "keywords": [
     "alpine",
